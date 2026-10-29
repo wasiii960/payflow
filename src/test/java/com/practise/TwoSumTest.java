@@ -42,4 +42,29 @@ public class TwoSumTest {
         int[] result = TwoSum.twoSum(nums, target);
         Assertions.assertArrayEquals(new int[] {0, 2}, result);
     }
+    @Test
+    void findTargetWhenSideBySideSorted(){
+        int [] nums = {1,3,4,5,7,11};
+        int target=9;
+        Assertions.assertArrayEquals(
+                new int[]{2,3},
+                TwoSum.twoSumSinglePassSorted(nums,target)
+        );
+    }
+    @Test
+    void findTargetWhenNegativeSorted(){
+        int [] nums = {-10,-3,10};
+        int target=-13;
+        Assertions.assertArrayEquals(
+                new int[]{0,1},
+                TwoSum.twoSumSinglePassSorted(nums,target)
+        );
+    }
+    @Test
+    void findTargetSortedNotExist(){
+        int [] nums = {-10,-3,10};
+        int target=-14;
+        Assertions.assertNull(TwoSum.twoSumSinglePassSorted(nums,target)
+        );
+    }
 }
