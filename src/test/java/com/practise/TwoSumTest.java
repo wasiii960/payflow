@@ -67,4 +67,39 @@ public class TwoSumTest {
         Assertions.assertNull(TwoSum.twoSumSinglePassSorted(nums,target)
         );
     }
+
+
+    @Test
+    void findsPairSinglePassUnsortedWhenSideBySide() {
+        // Arrange: prepare the input
+        int[] nums = {3, 2, 4};
+        int target = 6;
+
+        // Act: call the method being tested
+        int[] result = TwoSum.twoSumSinglePassUnSorted(nums, target);
+
+        // Assert: check the result
+        assertArrayEquals(new int[] {1, 2}, result);
+    }
+    @Test
+    void findTargetSinglePassUnsortedNotExist(){
+        int [] nums = {3, 2, 4};
+        int target=19;
+        int[] result = TwoSum.twoSumSinglePassUnSorted(nums, target);
+        assertNull(result);
+    }
+    @Test
+    void findNegativeSinglePassUnsortedTargetExist(){
+        int [] nums = {-1,-1,-3};
+        int target=-2;
+        int[] result = TwoSum.twoSumSinglePassUnSorted(nums, target);
+        assertArrayEquals(new int[] {0, 1}, result);
+    }
+    @Test
+    void findTargetSinglePassUnsortedWhenNotSideBySide(){
+        int [] nums = {3, 2, 4};
+        int target=7;
+        int[] result = TwoSum.twoSumSinglePassUnSorted(nums, target);
+        Assertions.assertArrayEquals(new int[] {0, 2}, result);
+    }
 }
