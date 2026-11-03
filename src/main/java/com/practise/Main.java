@@ -1,9 +1,25 @@
 package com.practise;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.sun.net.httpserver.HttpServer;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
+
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("PayFlow v0.2 running on Java " + System.getProperty("java.version"));
+    public static void main(String[] args) throws Exception {
+        int port = Integer.parseInt(System.getenv().getOrDefault("PORT", "8080"));
+        String env = System.getenv().getOrDefault("APP_ENV", "dev");
+
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+        server.createContext("/health", exchange -> {
+            String body = "{\"status\":\"UP\",\"env\":\"" + env + "\",\"java\":\""
+                    + System.getProperty("java.version") + "\"}";
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
+            exchange.sendResponseHeaders(200, body.length());
+            try (OutputStream out = exchange.getResponseBody()) {
+                out.write(body.getBytes());
+            }
+        });
+        server.start();
+        System.out.println("PayFlow listening on port " + port + " (env: " + env + ")");
     }
 }
