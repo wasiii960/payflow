@@ -147,4 +147,42 @@ class MyArrayListTest {
         MyArrayList list = new MyArrayList();
         assertThrows(IndexOutOfBoundsException.class, () -> list.remove(0));
     }
+    @Test
+    void getIndexEqualToSizeWithSpareCapacityThrows() {
+        MyArrayList list = new MyArrayList();
+        list.add(1);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(1));
+    }
+
+    @Test
+    void removeIndexEqualToSizeAfterGrowThrowsAndKeepsList() {
+        MyArrayList list = new MyArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.remove(3));
+        assertEquals(3, list.size());
+        assertEquals(1, list.get(0));
+        assertEquals(2, list.get(1));
+        assertEquals(3, list.get(2));
+    }
+
+    @Test
+    void getAfterGrowAtSizeThrows() {
+        MyArrayList list = new MyArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(3));
+    }
+
+    @Test
+    void exceptionMessageIncludesIndexAndSize() {
+        MyArrayList list = new MyArrayList();
+        list.add(1);
+        IndexOutOfBoundsException e =
+                assertThrows(IndexOutOfBoundsException.class, () -> list.remove(5));
+        assertTrue(e.getMessage().contains("5"));
+        assertTrue(e.getMessage().contains("1"));
+    }
 }

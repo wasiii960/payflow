@@ -1,45 +1,42 @@
 package com.practise;
 
 public class MyArrayList {
-    int size=2;
-    int currentSize=0;
-    int [] arr = new int[size];
+    private int size=0;
+    private int [] arr = new int[2];
     public void add(int num){
-        if(currentSize<size){
-            arr[currentSize]=num;
-            currentSize++;
+        if(size<arr.length){
+            arr[size]=num;
+            size++;
         }else{
             grow();
-            arr[currentSize++]=num;
+            arr[size++]=num;
         }
     }
     public int get(int index){
-        if(currentSize==0 || index>currentSize) throw new IndexOutOfBoundsException();
+        if(index<0 || index>=size) throw new IndexOutOfBoundsException("Index you are trying to get does not exist.Index:"+index+" Size:"+size);
         else return arr[index];
     }
     private void grow() {
-        size*=2;
-        int [] newArr= new int[size];
+        int tempSize=arr.length*2;
+        int [] newArr= new int[tempSize];
         for(int i=0;i<arr.length;i++){
             newArr[i]=arr[i];
         }
         arr = newArr;
     }
     public int size(){
-        return currentSize;
+        return size;
     }
     public int remove(int index){
-        if (currentSize==0 || index>currentSize) throw new IndexOutOfBoundsException();
+        if (index<0 || index>=size) throw new IndexOutOfBoundsException("Index you are trying to delete does not exist.Index:"+index+" Size:"+size);
         int deleted=arr[index];
-        if(index!=currentSize){
-            for(int i=index+1;i<currentSize;i++){
-                int temp=arr[index];
-                arr[index]=arr[i];
-                arr[i]=temp;
-                index++;
-            }
+        for(int i=index+1;i<size;i++){
+            int temp=arr[index];
+            arr[index]=arr[i];
+            arr[i]=temp;
+            index++;
         }
-        currentSize--;
+        size--;
         return deleted;
     }
 }
