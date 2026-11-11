@@ -26,4 +26,33 @@ public class ThreeSum {
         list.addAll(set);
         return list;
     }
+    public static List<List<Integer>> threeSumNoSet(int[] nums){
+        List<List<Integer>> result= new ArrayList<>();
+        Arrays.sort(nums);
+
+        int i=0;
+        while(i+1<nums.length){
+            if(i!=0 &&  nums[i]==nums[i-1]){
+                i++;
+                continue;
+            }
+            int k=nums.length-1;
+            int j=i+1;
+            while(k>j){
+                if(j!=i+1 && nums[j]==nums[j-1]){
+                    j++;
+                    continue;
+                }
+                if(nums[i]+nums[j]+nums[k]==0){
+                    result.add(List.of(nums[i],nums[j],nums[k]));
+                    k--;
+                    j++;
+                }
+                else if(nums[i]+nums[j]+nums[k]>0) k--;
+                else j++;
+            }
+            i++;
+        }
+        return result;
+    }
 }

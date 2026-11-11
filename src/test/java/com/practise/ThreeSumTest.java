@@ -65,4 +65,74 @@ class ThreeSumTest {
         check(new int[] {3, 0, -2, -1, 1, 2},
                 List.of(List.of(-2, -1, 3), List.of(-2, 0, 2), List.of(-1, 0, 1)));
     }
+
+    // ---------- threeSumNoSet ----------
+
+    private static void assertSameTriplets(List<List<Integer>> expected, List<List<Integer>> actual) {
+        assertEquals(expected.size(), actual.size(), "number of triplets (duplicates would make this bigger)");
+        assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    }
+
+    @Test
+    void noSetMixedValues() {
+        assertSameTriplets(
+                List.of(List.of(-1, -1, 2), List.of(-1, 0, 1)),
+                ThreeSum.threeSumNoSet(new int[]{-1, 0, 1, 2, -1, -4}));
+    }
+
+    @Test
+    void noSetAllZeros() {
+        assertSameTriplets(
+                List.of(List.of(0, 0, 0)),
+                ThreeSum.threeSumNoSet(new int[]{0, 0, 0, 0}));
+    }
+
+    @Test
+    void noSetDuplicatesForJAndK() {
+        assertSameTriplets(
+                List.of(List.of(-2, 0, 2)),
+                ThreeSum.threeSumNoSet(new int[]{-2, 0, 0, 2, 2}));
+    }
+
+    @Test
+    void noSetSameValueForIAndJ() {
+        assertSameTriplets(
+                List.of(List.of(-1, -1, 2)),
+                ThreeSum.threeSumNoSet(new int[]{-1, -1, 2}));
+    }
+
+    @Test
+    void noSetTwoMatchesInARow() {
+        assertSameTriplets(
+                List.of(List.of(-5, 1, 4), List.of(-5, 2, 3)),
+                ThreeSum.threeSumNoSet(new int[]{-5, 1, 2, 3, 4}));
+    }
+
+    @Test
+    void noSetNoTriplet() {
+        assertSameTriplets(
+                List.of(),
+                ThreeSum.threeSumNoSet(new int[]{0, 1, 1}));
+    }
+
+    @Test
+    void noSetFewerThanThreeElements() {
+        assertSameTriplets(
+                List.of(),
+                ThreeSum.threeSumNoSet(new int[]{0, 0}));
+    }
+
+    @Test
+    void noSetManyDuplicates() {
+        assertSameTriplets(
+                List.of(List.of(-2, 0, 2), List.of(-2, 1, 1), List.of(0, 0, 0)),
+                ThreeSum.threeSumNoSet(new int[]{-2, -2, 0, 0, 0, 1, 1, 2, 2}));
+    }
+
+    @Test
+    void noSetTripletNeedsGapBetweenIAndJ() {
+        assertSameTriplets(
+                List.of(List.of(-3, 1, 2)),
+                ThreeSum.threeSumNoSet(new int[]{-3, -1, 1, 2}));
+    }
 }
